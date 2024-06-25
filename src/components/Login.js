@@ -1,16 +1,36 @@
 "use client";
 
 import { useState } from 'react';
+import axios from 'axios';
+import { setCookie } from 'cookies-next';
+import { useRouter } from 'next/navigation';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [message, setMessage] = useState('');
+    const router = useRouter();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+
         //Handle login logic here
         console.log('Email:', email);
         console.log('Password:', password);
+
+        try {
+            const response = await axios.post('/api/login', { email, password });
+            console.log(response.data);
+                    // Set token in cookie
+            setCookie('token', reponse.data.token);
+            setMessage(response.data.message);
+            router.push('/');
+            setTimeout(function(){
+
+            }, 1000);
+        } catch(error) {
+            setMessage(error.response.data.message);
+        }
     };
 
     return(
@@ -58,6 +78,7 @@ const Login = () => {
                             Sign In
                         </button>
                     </div>
+                    {message && <p className="text-red-500 text-center">{message}</p>}
                 </form>
             </div>
         </div>
