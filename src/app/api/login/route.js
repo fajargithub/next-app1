@@ -29,7 +29,7 @@ const users = [
   
     // Create JWT token
     const token = jwt.sign({ id: user.id, email: user.email }, 'your_jwt_secret', { expiresIn: '1h' });
-    return NextResponse.json({ success: true, token: token, message:'Login Success' });
+    return NextResponse.json({ success: true, token: token, message:'Login Success', message: 'Login Successfully' });
   
     // const token = jwt.sign({ email: user.email }, 'your_jwt_secret', { expiresIn: '1h' });
     // return NextResponse.json({ token });
