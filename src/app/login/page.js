@@ -22,14 +22,15 @@ const Login = () => {
             const response = await axios.post('/api/login', { email, password });
             console.log(response.data);
                     // Set token in cookie
-            setCookie('token', reponse.data.token);
+            setCookie('token', response.data.token);
             setMessage(response.data.message);
-            router.push('/');
+            //router.push('/');
             setTimeout(function(){
 
             }, 1000);
         } catch(error) {
-            setMessage(error.response.data.message);
+            console.log(error);
+            //setMessage(error.response.message);
         }
     };
 
