@@ -12,23 +12,24 @@ const users = [
   ];
 
   export async function POST(request) {
+
     const { email, password } = await request.json();
     const user = users.find(u => u.email === email);
-    console.log(user);
+
     if (!user) {
-        return NextResponse.json({ message: 'Invalid email or password' }, { status: 401 });
+        return NextResponse.json({ success: false, message: 'Invalid email or password' });
     }
-  
+
     // Compare the provided password with the hashed password
     const isMatch = await bcrypt.compare(password, user.password);
   
     if (!isMatch) {
-        return NextResponse.json({ message: 'Invalid email or password' }, { status: 401 });
+        return NextResponse.json({ success: false, message: 'Invalid email or password' });
     }
   
     // Create JWT token
     const token = jwt.sign({ id: user.id, email: user.email }, 'your_jwt_secret', { expiresIn: '1h' });
-    return NextResponse.json({ status: true, token: token, message:'Login Success' });
+    return NextResponse.json({ success: true, token: token, message:'Login Success' });
   
     // const token = jwt.sign({ email: user.email }, 'your_jwt_secret', { expiresIn: '1h' });
     // return NextResponse.json({ token });

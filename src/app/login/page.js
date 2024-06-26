@@ -24,10 +24,7 @@ const Login = () => {
                     // Set token in cookie
             setCookie('token', response.data.token);
             setMessage(response.data.message);
-            //router.push('/');
-            setTimeout(function(){
-
-            }, 1000);
+            router.push('/');
         } catch(error) {
             console.log(error);
             //setMessage(error.response.message);
