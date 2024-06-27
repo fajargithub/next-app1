@@ -16,7 +16,6 @@ const Index = () => {
     if (token) {
       try {
         const decoded = jwt.verify(token, process.env.NEXT_PUBLIC_JWT_SECRET);
-        console.log(decoded);
         setTheUser(decoded);
 
       } catch (err) {
@@ -39,9 +38,6 @@ const Index = () => {
 
   return (
     <Home user={user} />
-    // <div className="flex items-center bg-gray-100">
-    //     <h1>Welcome!, {user.email}</h1>
-    // </div>
   );
 };
 
