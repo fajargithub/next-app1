@@ -1,15 +1,23 @@
 "use client";
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { setCookie } from 'cookies-next';
-import { useRouter } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 
 const Login = () => {
+
+    const searchParams = useSearchParams();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
     const router = useRouter();
+
+    useEffect(() => {
+        console.log('on login useEffect!');
+        const error = searchParams.get('error');
+        setMessage(error);
+    }, [searchParams]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

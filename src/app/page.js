@@ -4,8 +4,9 @@ import { useEffect, useState } from 'react';
 import { getCookie } from 'cookies-next';
 import jwt from 'jsonwebtoken';
 import { useRouter } from 'next/navigation';
+import Home from '../app/home/page';
 
-const Home = () => {
+const Index = () => {
   const [user, setTheUser] = useState(null);
   const router = useRouter();
 
@@ -20,13 +21,13 @@ const Home = () => {
 
       } catch (err) {
         console.error('Token verification failed', err);
-        router.push('/login'); // Redirect to login if token is invalid
+        router.push(`/login?error=${encodeURIComponent('Your Token session is expired, Please log in again')}`); // Redirect to login if token is invalid
       }
 
       console.log(user);
     } else {
       console.log('on else useEffect')
-      router.push('/login'); // Redirect to login if no token is found
+      router.push(`/login?error=${encodeURIComponent('Please log in')}`);
     }
   }, [router]);
 
@@ -37,10 +38,11 @@ const Home = () => {
   }
 
   return (
-    <div className="flex items-center bg-gray-100">
-        <h1>Welcome!, {user.email}</h1>
-    </div>
+    <Home user={user} />
+    // <div className="flex items-center bg-gray-100">
+    //     <h1>Welcome!, {user.email}</h1>
+    // </div>
   );
 };
 
-export default Home;
+export default Index;
