@@ -29,10 +29,16 @@ const Login = () => {
         try {
             const response = await axios.post('/api/login', { email, password });
             console.log(response.data);
-                    // Set token in cookie
-            setCookie('token', response.data.token);
-            setMessage(response.data.message);
-            router.push('/');
+            if(response.data.success){
+                // Set token in cookie
+                setCookie('token', response.data.token);
+                setMessage(response.data.message);
+                router.push('/');
+            }
+            else {
+                setMessage(response.data.message);
+            }
+            
         } catch(error) {
             console.log(error);
             //setMessage(error.response.message);
